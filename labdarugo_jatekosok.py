@@ -14,10 +14,48 @@ Olvasd be a labdarugok.txt adatait, majd oldd meg az alábbi feladatokat!
 A megoldott feladatokat a kiirt_adatok nevű mappában hozd létre statisztika.txt néven!
 """
 
+labdarugok = []
+with open('beolvasando_adatok/labdarugok.txt', 'r', encoding='utf-8') as forrasfajl:
+    next(forrasfajl)
+    for sor in forrasfajl:
+        adatok = sor.strip().split(';')
+        labdarugo = {
+            'nev': adatok[0],
+            'csapat': adatok[1],
+            'golszam': int(adatok[2]),
+            'merkozesek_szama': int(adatok[3])
+        }
+        labdarugok.append(labdarugo)
 
-print("A beolvasott fájlban összesen ____ játékos szerepel.")
-print("A legkevesebb gólt szerző játékos: ____")
-print("A legtöbb gólt szerző játékos: ____")
-print("A legtöbb mérkőzést játszó játékos: ____")
-print("Az átlagos gólszám: ____")
-print("***A legtöbb gólt szerző csapat: ____")
+print(f'{labdarugok=}')
+
+jatekosok_szama = len(labdarugok)
+
+legkevesebb = labdarugok[0]
+for labdarugo in labdarugok:
+    if labdarugo['golszam'] < legkevesebb['golszam']:
+        legkevesebb = labdarugo
+
+legtobb = labdarugok[0]
+for labdarugo in labdarugok:
+    if labdarugo['golszam'] > legtobb['golszam']:
+        legtobb = labdarugo
+
+legtobb_merkozes = labdarugok[0]
+for labdarugo in labdarugok:
+    if labdarugo['merkozesek_szama'] > legtobb_merkozes['merkozesek_szama']:
+        legtobb_merkozes = labdarugo
+
+osszes_gol = 0
+for labdarugo in labdarugok:
+    osszes_gol += labdarugo['golszam']
+
+atlag = osszes_gol / len(labdarugok)
+
+
+print(f"A beolvasott fájlban összesen {jatekosok_szama} játékos szerepel.")
+print(f"A legkevesebb gólt szerző játékos: {legkevesebb['nev']} ({legkevesebb['golszam']} gól)")
+print(f"A legtöbb gólt szerző játékos: {legtobb['nev']} ({legtobb['golszam']} gól)")
+print(f"A legtöbb mérkőzést játszó játékos: {legtobb_merkozes['nev']} ({legtobb_merkozes['merkozesek_szama']} meccs)")
+print(f"Az átlagos gólszám: {atlag}")
+print(f"A legtöbb gólt szerző csapat:____")
