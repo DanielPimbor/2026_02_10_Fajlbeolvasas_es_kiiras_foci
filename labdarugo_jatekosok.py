@@ -52,10 +52,29 @@ for labdarugo in labdarugok:
 
 atlag = osszes_gol / len(labdarugok)
 
+csapatok_goljai = {}
+
+for labdarugo in labdarugok:
+    csapat = labdarugo['csapat']
+    golok = labdarugo['golszam']
+
+    if csapat in csapatok_goljai:
+        csapatok_goljai[csapat] += golok
+    
+    else:
+        csapatok_goljai[csapat] = golok
+
+legtobb_csapat = ''
+legtobb_gol = 0
+
+for csapat, gol in csapatok_goljai.items():
+    if gol > legtobb_gol:
+        legtobb_csapat = csapat
+        legtobb_gol = gol
 
 print(f"A beolvasott fájlban összesen {jatekosok_szama} játékos szerepel.")
 print(f"A legkevesebb gólt szerző játékos: {legkevesebb['nev']} ({legkevesebb['golszam']} gól)")
 print(f"A legtöbb gólt szerző játékos: {legtobb['nev']} ({legtobb['golszam']} gól)")
 print(f"A legtöbb mérkőzést játszó játékos: {legtobb_merkozes['nev']} ({legtobb_merkozes['merkozesek_szama']} meccs)")
 print(f"Az átlagos gólszám: {atlag}")
-print(f"A legtöbb gólt szerző csapat:____")
+print(f"A legtöbb gólt szerző csapat:{legtobb_csapat}")
